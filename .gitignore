@@ -1,7 +1,9 @@
-/.bloop
+.metals/
+*.class
 .idea
-/.metals
 .bloop
-.vscode
-/.vscode
-target
+target/
+**/secret.conf
+**/.DS_Store
+.vscode/
+.bsp
