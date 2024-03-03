@@ -1,5 +1,8 @@
+ThisBuild / scalaVersion := "3.3.2-RC3"
+ThisBuild / versionScheme := Some("early-semver")
+ThisBuild / githubWorkflowPublishTargetBranches := Seq()
+
 val commonSettings = Seq(
-  scalaVersion := "3.3.2-RC3",
   scalacOptions -= "-Xfatal-warnings",
   libraryDependencies ++= Seq(
     "org.typelevel" %% "cats-effect" % "3.5.0-RC3",
@@ -16,5 +19,5 @@ val client = project.settings(commonSettings)
 
 val root = project
   .in(file("."))
-  .settings(publish := {})
+  .settings(publish := {}, publish / skip := true)
   .aggregate(server, client, shared)
