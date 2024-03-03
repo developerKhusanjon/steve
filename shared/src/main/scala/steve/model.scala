@@ -5,7 +5,7 @@ enum Command {
   case Run(hash: Hash)
 }
 
-case class Build(
+final case class Build(
   base: Build.Base,
   commands: List[Build.Command],
 )
@@ -25,4 +25,4 @@ object Build {
   val empty: Build = Build(Base.EmptyImage, Nil)
 }
 
-case class Hash(value: Array[Byte])
+final case class Hash(value: Array[Byte])
