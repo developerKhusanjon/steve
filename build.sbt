@@ -20,4 +20,4 @@ val client = project.settings(commonSettings).dependsOn(shared)
 val root = project
   .in(file("."))
   .settings(publish := {}, publish / skip := true)
-  .aggregate(server, client, shared)
+  .aggregate(server, client)
