@@ -8,11 +8,7 @@ trait Executor[F[_]] {
 object Executor {
 
   def apply[F[_]](
-    using F: Executor[F]
-  ): Executor[F] = F
+    using f: Executor[F]
+  ): Executor[F] = f
 
-}
-
-trait SystemState {
-  def getAll: Map[String, String]
 }
