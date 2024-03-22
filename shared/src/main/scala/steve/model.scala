@@ -1,32 +1,40 @@
 package steve
 
 import io.circe.Codec
+import sttp.tapir.Schema
 
-enum Command {
-  case Build(build: steve.Build)
-  case Run(hash: Hash)
+sealed trait Command extends Product with Serializable
+
+object Command {
+  final case class Build(build: steve.Build) extends Command
+  final case class Run(hash: Hash) extends Command
 }
 
 final case class Build(
   base: Build.Base,
   commands: List[Build.Command],
-) derives Codec.AsObject
+) derives Codec.AsObject,
+    Schema
 
 object Build {
 
-  enum Base derives Codec.AsObject {
-    case EmptyImage
-    case ImageReference(hash: Hash)
+  sealed trait Base extends Product with Serializable derives Codec.AsObject, Schema
+
+  object Base {
+    case object EmptyImage extends Base
+    final case class ImageReference(hash: Hash) extends Base
   }
 
-  enum Command derives Codec.AsObject {
-    case Upsert(key: String, value: String)
-    case Delete(key: String)
+  sealed trait Command extends Product with Serializable derives Codec.AsObject, Schema
+
+  object Command {
+    final case class Upsert(key: String, value: String) extends Command
+    final case class Delete(key: String) extends Command
   }
 
   val empty: Build = Build(Base.EmptyImage, Nil)
 }
 
-final case class Hash(value: Array[Byte]) derives Codec.AsObject
+final case class Hash(value: Array[Byte]) derives Codec.AsObject, Schema
 
-final case class SystemState(getAll: Map[String, String]) derives Codec.AsObject
+final case class SystemState(getAll: Map[String, String]) derives Codec.AsObject, Schema
