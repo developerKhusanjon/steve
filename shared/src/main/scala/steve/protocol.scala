@@ -1,7 +1,5 @@
 package steve
 
-import io.circe.Codec as CirceCodec
-
 object protocol {
   import sttp.tapir.*
   import sttp.tapir.json.circe.*
